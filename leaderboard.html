@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU Sports Rewards - Leaderboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation will be inserted here by JavaScript -->
+    <main>
+        <div id="leaderboard-container">
+            <div class="leaderboard-header">
+                <h2>Leaderboard</h2>
+            </div>
+            <div class="leaderboard-controls">
+                <div class="sort-controls">
+                    <button class="sort-btn active" data-sort="points">Sort by Points</button>
+                    <button class="sort-btn" data-sort="streak">Sort by Streak</button>
+                </div>
+                <div class="filter-controls">
+                    <button class="filter-btn" id="friends-filter">Show Friends Only</button>
+                    <button class="find-me-btn">Find Me</button>
+                </div>
+            </div>
+            <div class="leaderboard-table-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Profile</th>
+                            <th>Username</th>
+                            <th>Season Points</th>
+                            <th>Current Streak</th>
+                            <th>Longest Streak</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="/main.js" type="module"></script>
+    <script src="/instagramAuth.js" type="module"></script>
+    <script src="nav.js" type="module"></script>
+    <script src="leaderboard.js" type="module"></script>
+</body>
+</html> 

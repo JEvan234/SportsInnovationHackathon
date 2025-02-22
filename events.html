@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU Fan Rewards - Events</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="events-section">
+            <h2>Upcoming Events</h2>
+            
+            <div class="points-multiplier-info">
+                <i class="fas fa-users"></i>
+                <span>Invite friends and earn 2x points for each event!</span>
+            </div>
+
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-type">Basketball</div>
+                    <h3>KSU Owls vs Georgia Tech</h3>
+                    <div class="event-basic-info">
+                        <p>March 20, 2024 • 7:00 PM</p>
+                        <p>KSU Convocation Center</p>
+                    </div>
+                    <div class="points-breakdown">
+                        <div class="points-item">
+                            <span class="points-label">Base Points</span>
+                            <span class="points-value">250 pts</span>
+                        </div>
+                        <div class="points-item bonus">
+                            <span class="points-label">Friend Bonus</span>
+                            <span class="points-value">+250 pts</span>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="rsvp-btn" onclick="handleRSVP('Basketball')">RSVP Now</button>
+                        <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-type">Baseball</div>
+                    <h3>KSU Owls vs UGA Bulldogs</h3>
+                    <div class="event-basic-info">
+                        <p>March 23, 2024 • 2:00 PM</p>
+                        <p>Stillwell Stadium</p>
+                    </div>
+                    <div class="points-breakdown">
+                        <div class="points-item">
+                            <span class="points-label">Base Points</span>
+                            <span class="points-value">200 pts</span>
+                        </div>
+                        <div class="points-item bonus">
+                            <span class="points-label">Friend Bonus</span>
+                            <span class="points-value">+200 pts</span>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="rsvp-btn" onclick="handleRSVP('Baseball')">RSVP Now</button>
+                        <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-type">Volleyball</div>
+                    <h3>KSU Owls vs Mercer Bears</h3>
+                    <div class="event-basic-info">
+                        <p>March 25, 2024 • 6:30 PM</p>
+                        <p>Carmichael Student Center</p>
+                    </div>
+                    <div class="points-breakdown">
+                        <div class="points-item">
+                            <span class="points-label">Base Points</span>
+                            <span class="points-value">150 pts</span>
+                        </div>
+                        <div class="points-item bonus">
+                            <span class="points-label">Friend Bonus</span>
+                            <span class="points-value">+150 pts</span>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button class="rsvp-btn" onclick="handleRSVP('Volleyball')">RSVP Now</button>
+                        <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleRSVP(eventType) {
+            alert(`RSVP successful! Don't forget to invite friends to earn 2x points at the ${eventType} game!`);
+        }
+
+        async function loadKSUEvents() {
+    const events = await fetchKSUEvents();
+    const eventsGrid = document.querySelector('.events-grid');
+    eventsGrid.innerHTML = ''; // Clear existing events
+
+    events.forEach(event => {
+        const eventCard = `
+            <div class="event-card">
+                <div class="event-type">${event.sport}</div>
+                <h3>${event.homeTeam} vs ${event.awayTeam}</h3>
+                <div class="event-basic-info">
+                    <p>${event.date} • ${event.time}</p>
+                    <p>${event.location}</p>
+                </div>
+                <div class="points-breakdown">
+                    <div class="points-item">
+                        <span class="points-label">Base Points</span>
+                        <span class="points-value">${event.basePoints} pts</span>
+                    </div>
+                    <div class="points-item bonus">
+                        <span class="points-label">Friend Bonus</span>
+                        <span class="points-value">+${event.basePoints} pts</span>
+                    </div>
+                </div>
+                <button class="rsvp-btn" onclick="handleRSVP('${event.sport}')">RSVP Now</button>
+            </div>
+        `;
+        eventsGrid.innerHTML += eventCard;
+    });
+}
+    </script>
+    
+    <script src="nav.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+
+    <style>
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .location-btn {
+            background-color: white;
+            color: #4a4a4a;
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border: 1px solid #4a4a4a;
+            transition: all 0.2s ease;
+        }
+
+        .location-btn:hover {
+            background-color: #4a4a4a;
+            color: white;
+        }
+    </style>
+</body>
+</html> 

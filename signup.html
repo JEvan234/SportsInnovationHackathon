@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU Fan Rewards - Sign Up</title>
+    <link rel="stylesheet" href="auth-styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="ksu-logo.png" alt="KSU Logo" class="logo">
+                <h1>KSU Fan Rewards</h1>
+                <p class="bonus-alert">🎉 New Fan Bonus: 800 Points!</p>
+            </div>
+
+            <form id="signupForm" class="auth-form">
+                <div class="form-step active" id="step1">
+                    <h2>Create Your Account</h2>
+                    <div class="input-group">
+                        <input type="email" id="email" required placeholder="KSU Email Address">
+                        <small>Please use your @students.kennesaw.edu email</small>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" required placeholder="Create Password">
+                        <small>Minimum 8 characters</small>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="confirmPassword" required placeholder="Confirm Password">
+                    </div>
+                    <button type="button" class="next-btn" onclick="nextStep()">Next</button>
+                    <p class="auth-switch">Already have an account? <a href="login.html">Log In</a></p>
+                </div>
+
+                <div class="form-step" id="step2">
+                    <h2>Connect Instagram</h2>
+                    <p class="instagram-info">
+                        Connect your Instagram account to follow and support KSU athletes!
+                    </p>
+                    <div class="input-group">
+                        <input type="text" id="instagramHandle" required placeholder="Instagram Username">
+                        <small>Enter without @ symbol</small>
+                    </div>
+                    <div class="verification-group">
+                        <button type="button" id="verifyInstagram" class="verify-btn">
+                            Verify Instagram Account
+                        </button>
+                        <span id="verificationStatus"></span>
+                    </div>
+                    <button type="submit" class="submit-btn" disabled>Complete Sign Up</button>
+                    <button type="button" class="back-btn" onclick="previousStep()">Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 

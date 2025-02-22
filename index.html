@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU Fan Rewards</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <main>
+        <!-- User Status Section -->
+        <section class="user-status">
+            <div class="tier-card">
+                <div class="tier-badge grey">Grey Fan</div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 60%"></div>
+                    <span>Progress to Black Fan: 60%</span>
+                </div>
+            </div>
+            <div class="streak-card">
+                <h3>Current Streak</h3>
+                <div class="streak-count">4</div>
+                <p>Games in a row!</p>
+                <div class="multiplier">5x Points Active!</div>
+            </div>
+        </section>
+
+        <!-- Updated Games Section with Players -->
+        <section class="games-section">
+            <h2>Upcoming Games</h2>
+            <div class="game-card">
+                <div class="game-date">MAR 15</div>
+                <div class="game-details">
+                    <h3>Basketball vs Georgia Tech</h3>
+                    <p>7:00 PM - KSU Convocation Center</p>
+                    <div class="points-info">
+                        <span class="base-points">250 pts</span>
+                        <span class="bonus">+Streak Bonus Available!</span>
+                    </div>
+                    <button class="view-players-btn">View Players</button>
+                    <button class="check-in-btn">Check In</button>
+                </div>
+            </div>
+
+            <!-- Players Modal -->
+            <div id="playersModal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>KSU Basketball Team</h2>
+                    <div class="players-grid">
+                        <div class="player-card">
+                            <img src="player1-placeholder.jpg" alt="Player 1">
+                            <h3>Caroline Cole</h3>
+                            <p>#2 | Guard</p>
+                            <div class="social-links">
+                                <a href="https://instagram.com/_caroline_cole" target="_blank" class="social-btn instagram">
+                                    <i class="fab fa-instagram"></i> @_caroline_cole
+                                </a>
+                            </div>
+                            <button class="follow-btn" 
+                                    data-player-id="1"
+                                    data-instagram-handle=" _caroline_cole">
+                                Follow Player
+                                <span class="follow-points">+500 pts</span>
+                            </button>
+                        </div>
+
+                        <div class="player-card">
+                            <img src="player2-placeholder.jpg" alt="Player 2">
+                            <h3>Chris Youngblood</h3>
+                            <p>#5 | Guard</p>
+                            <div class="social-links">
+                                <a href="https://instagram.com/player2" target="_blank" class="social-btn instagram">
+                                    <i class="fab fa-instagram"></i> @player2
+                                </a>
+                            </div>
+                            <button class="follow-btn" 
+                                    data-player-id="2"
+                                    data-instagram-handle="player2">
+                                Follow Player
+                                <span class="follow-points">+500 pts</span>
+                            </button>
+                        </div>
+
+                        <!-- Add more player cards as needed -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rewards Progress Section -->
+
+        <!-- Referral Section -->
+        <section class="referral-section">
+            <div class="referral-container">
+                <div class="referral-card">
+                    <h3>Earn 800 points for each friend!</h3>
+                    <p>Share your referral code:</p>
+                    <div class="referral-code-container">
+                        <span class="referral-code" id="myReferralCode">ABC123</span>
+                        <button id="copyButton" class="share-btn">Copy Code</button>
+                    </div>
+                </div>
+                
+                <div class="referral-card">
+                    <h3>Got a referral code?</h3>
+                    <div class="referral-form">
+                        <input type="text" id="referralInput" placeholder="Enter referral code" class="referral-input">
+                        <button id="submitReferral" class="share-btn">Submit Code</button>
+                    </div>
+                    <p id="successMessage" class="success-message" style="display: none; color: green; margin-top: 10px;">
+                        Referral code successfully saved!
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 KSU Sports Rewards Program</p>
+    </footer>
+    <script src="/main.js" type="module"></script>
+    <script src="instagramAuth.js" type="module"></script>
+    <script src="nav.js" type="module"></script>
+    <script src="app.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</body>
+</html>
