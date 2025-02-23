@@ -248,3 +248,25 @@ window.onload = function() {
 
 // Save points when page unloads
 window.onbeforeunload = savePoints;
+
+function handleTicket(ticketData) {
+    try {
+        // If ticketData is already a string, no need to parse it
+        const ticket = typeof ticketData === 'string' ? JSON.parse(ticketData) : ticketData;
+        
+        // Check if ticket has ticketId
+        if (ticket && ticket.ticketId) {
+            // Use the correct validation URL with the ticketId
+            const validationUrl = `http://127.0.0.1:5500/validate.html?ticket=${encodeURIComponent(ticket.ticketId)}`;
+            
+            // Redirect to validation page
+            window.location.href = validationUrl;
+        } else {
+            console.error('Invalid ticket data');
+            alert('Invalid QR code format');
+        }
+    } catch (error) {
+        console.error('Error processing ticket:', error);
+        alert('Error processing QR code');
+    }
+}

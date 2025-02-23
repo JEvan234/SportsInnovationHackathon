@@ -200,12 +200,15 @@
                 status: "Valid Ticket"
             };
 
+            // Create the validation URL with ticket data as parameters
+            const validationUrl = `http://172.20.10.2:5500/validate.html`;
+
             // Show modal
             document.getElementById('ticketModal').style.display = 'flex';
 
-            // Generate QR code with the ticket data directly
+            // Generate QR code with the URL instead of the ticket data
             new QRCode(document.getElementById("qrcode"), {
-                text: JSON.stringify(ticketData),
+                text: validationUrl,
                 width: 200,
                 height: 200,
                 colorDark: "#000000",
