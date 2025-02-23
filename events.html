@@ -6,8 +6,87 @@
     <title>KSU Fan Rewards - Events</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            max-width: 320px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .close-button {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+        #modalTitle {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        #qrcode {
+            margin: 20px auto;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            width: fit-content;
+        }
+
+        #ticketId {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        .validation-text {
+            color: #4CAF50;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeModal()">&times;</button>
+            <h2 id="modalTitle"></h2>
+            <div id="qrcode"></div>
+            <p id="ticketId"></p>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="nav-left">
         </div>
@@ -41,7 +120,7 @@
                         </div>
                     </div>
                     <div class="button-group">
-                        <button class="rsvp-btn" onclick="handleRSVP('Basketball')">RSVP Now</button>
+                        <button class="rsvp-btn" onclick="handleTicket('Basketball')">Get Ticket</button>
                         <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
                             <i class="fas fa-map-marker-alt"></i>
                         </a>
@@ -66,7 +145,7 @@
                         </div>
                     </div>
                     <div class="button-group">
-                        <button class="rsvp-btn" onclick="handleRSVP('Baseball')">RSVP Now</button>
+                        <button class="rsvp-btn" onclick="handleTicket('Baseball')">Get Ticket</button>
                         <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
                             <i class="fas fa-map-marker-alt"></i>
                         </a>
@@ -91,7 +170,7 @@
                         </div>
                     </div>
                     <div class="button-group">
-                        <button class="rsvp-btn" onclick="handleRSVP('Volleyball')">RSVP Now</button>
+                        <button class="rsvp-btn" onclick="handleTicket('Volleyball')">Get Ticket</button>
                         <a href="https://www.kennesaw.edu/parking/docs/kennesaw-parking-map.pdf" target="_blank" class="location-btn">
                             <i class="fas fa-map-marker-alt"></i>
                         </a>
@@ -102,40 +181,50 @@
     </div>
 
     <script>
-        function handleRSVP(eventType) {
-            alert(`RSVP successful! Don't forget to invite friends to earn 2x points at the ${eventType} game!`);
+        function handleTicket(eventType) {
+            // Clear any existing QR code
+            document.getElementById('qrcode').innerHTML = '';
+            
+            // Generate ticket ID
+            const ticketId = `KSU-${eventType}-${Date.now()}`;
+            
+            // Update modal content
+            document.getElementById('modalTitle').textContent = `Your ${eventType} Ticket`;
+            document.getElementById('ticketId').textContent = `Ticket ID: ${ticketId}`;
+            
+            // Create validation data
+            const ticketData = {
+                event: eventType,
+                ticketId: ticketId,
+                timestamp: new Date().toISOString(),
+                status: "Valid Ticket"
+            };
+
+            // Show modal
+            document.getElementById('ticketModal').style.display = 'flex';
+
+            // Generate QR code with the ticket data directly
+            new QRCode(document.getElementById("qrcode"), {
+                text: JSON.stringify(ticketData),
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
         }
 
-        async function loadKSUEvents() {
-    const events = await fetchKSUEvents();
-    const eventsGrid = document.querySelector('.events-grid');
-    eventsGrid.innerHTML = ''; // Clear existing events
+        function closeModal() {
+            document.getElementById('ticketModal').style.display = 'none';
+        }
 
-    events.forEach(event => {
-        const eventCard = `
-            <div class="event-card">
-                <div class="event-type">${event.sport}</div>
-                <h3>${event.homeTeam} vs ${event.awayTeam}</h3>
-                <div class="event-basic-info">
-                    <p>${event.date} • ${event.time}</p>
-                    <p>${event.location}</p>
-                </div>
-                <div class="points-breakdown">
-                    <div class="points-item">
-                        <span class="points-label">Base Points</span>
-                        <span class="points-value">${event.basePoints} pts</span>
-                    </div>
-                    <div class="points-item bonus">
-                        <span class="points-label">Friend Bonus</span>
-                        <span class="points-value">+${event.basePoints} pts</span>
-                    </div>
-                </div>
-                <button class="rsvp-btn" onclick="handleRSVP('${event.sport}')">RSVP Now</button>
-            </div>
-        `;
-        eventsGrid.innerHTML += eventCard;
-    });
-}
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('ticketModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
     
     <script src="nav.js" type="module"></script>

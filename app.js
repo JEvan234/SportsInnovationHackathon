@@ -10,8 +10,16 @@ class UIController {
         
         console.log('UIController initializing...');
         
+        const referralSection = document.querySelector('.referral-section');
+        if (referralSection) {
+            // Your referral section code here
+            console.log('Referral section initialized');
+            this.initializeQRCode();
+        } else {
+            console.log('Referral section not found - This is expected on pages without referrals');
+        }
+        
         // Initialize current user (in real app, this would come from authentication)
-        this.initializeQRCode();
         this.currentUser = rewardsSystem.createUser('12345', 'Demo User', 'demo@kennesaw.edu');
         this.initializeEventListeners();
         this.updateUI();
@@ -305,7 +313,14 @@ class UIController {
 }
 
 // Initialize the UI when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize any necessary UI components
+    const referralSection = document.querySelector('.referral-section');
+    if (referralSection) {
+        // Handle referral section if it exists
+    }
+    
+    // Initialize other UI components as needed
     new UIController();
 });
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSU Ticket Validation</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            padding: 20px;
+        }
+
+        .validation-container {
+            background: #2d2d2d;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #00ff00;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .ticket-details {
+            color: #e0e0e0;
+            margin: 15px 0;
+            text-align: left;
+            padding: 15px;
+            background: #3d3d3d;
+            border-radius: 8px;
+        }
+
+        .ticket-details p {
+            margin: 5px 0;
+        }
+
+        .valid-badge {
+            display: inline-block;
+            background: #00ff00;
+            color: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="validation-container">
+        <div class="success-icon">✓</div>
+        <h1>Valid KSU Ticket</h1>
+        <div id="ticketDetails" class="ticket-details">
+            <p>Loading ticket details...</p>
+        </div>
+        <div class="valid-badge">Valid Entry</div>
+    </div>
+
+    <script>
+        // Function to parse ticket data from QR code
+        function displayTicketDetails() {
+            try {
+                // Get the data from the URL if it exists
+                const urlParams = new URLSearchParams(window.location.search);
+                const ticketData = urlParams.get('data');
+                
+                if (ticketData) {
+                    const data = JSON.parse(decodeURIComponent(ticketData));
+                    const detailsHtml = `
+                        <p><strong>Event:</strong> ${data.event}</p>
+                        <p><strong>Ticket ID:</strong> ${data.ticketId}</p>
+                        <p><strong>Status:</strong> ${data.status}</p>
+                        <p><strong>Generated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                    `;
+                    document.getElementById('ticketDetails').innerHTML = detailsHtml;
+                } else {
+                    document.getElementById('ticketDetails').innerHTML = `
+                        <p>Please scan a valid KSU ticket QR code.</p>
+                    `;
+                }
+            } catch (error) {
+                document.getElementById('ticketDetails').innerHTML = `
+                    <p>Error reading ticket data. Please try scanning again.</p>
+                `;
+            }
+        }
+
+        // Run when page loads
+        displayTicketDetails();
+    </script>
+</body>
+</html> 
