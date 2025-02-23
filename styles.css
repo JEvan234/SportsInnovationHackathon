@@ -138,14 +138,16 @@ nav a.active {
     50% { background: rgba(0, 123, 255, 0.3); }
 }
 
-.qr-code-container {
-    display: inline-block;
-    margin-left: 20px;
-    vertical-align: middle;
-    padding: 10px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.qr-container,
+.progress-container,
+.progress-bar,
+.progress-fill,
+.progress-info,
+.tier-label,
+.points-needed,
+.tier-card,
+.streak-card {
+    display: none;
 }
 
 .referral-container {
@@ -163,6 +165,7 @@ nav a.active {
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     color: white;
+    bottom: 100px;
 }
 
 .referral-code-container {
@@ -222,8 +225,17 @@ nav a.active {
 }
 
 body {
-    background-color: var(--background-dark);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-image: url('assets/Screenshot 2025-02-22 at 5.40.41 PM.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: var(--text-primary);
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100vw;
 }
 
 /* Header Styles */
@@ -259,9 +271,14 @@ header {
 
 /* Main Content Styles */
 main {
+    position: relative;
+    z-index: 1;
+    padding: 20px 40px;
+    margin-top: -100px; /* Negative margin to pull everything up */
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
 }
 
 /* User Status Section */
@@ -270,6 +287,7 @@ main {
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
     margin-bottom: 2rem;
+    background: transparent;
 }
 
 .tier-card, .streak-card {
@@ -286,28 +304,6 @@ main {
     margin-bottom: 1rem;
     background: var(--accent-dark);
     color: var(--primary-color);
-}
-
-.progress-container {
-    background: var(--progress-bg);
-    border-radius: 10px;
-    height: 8px;
-    position: relative;
-    margin-top: 1rem;
-}
-
-.progress-container span {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-    display: block;
-}
-
-.progress-bar {
-    background: var(--primary-color);
-    height: 100%;
-    border-radius: 10px;
-    transition: width 0.3s ease;
 }
 
 /* Games Section */
@@ -456,107 +452,6 @@ main {
     color: var(--text-secondary);
 }
 
-/* Referral Section */
-.referral-section {
-    width: 100%;
-    padding: 20px 0;  /* Removed side padding completely */
-    display: flex;
-    justify-content: center;
-}
-
-.referral-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-    padding: 0 10px;  /* Minimal padding */
-}
-
-.referral-card {
-    flex: 0 1 400px;  /* Increased base width */
-    padding: 20px;
-    text-align: center;
-    background: #242424;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: white;
-}
-
-.referral-card h3 {
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-}
-
-.referral-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.referral-input {
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    background: white;
-    color: black;  /* Keeping input text dark */
-}
-
-.referral-code-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 15px 0;
-}
-
-.referral-code {
-    display: inline-block;
-    padding: 8px 15px;
-    background: white;
-    color: black;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    margin-bottom: 10px;
-    min-width: 100px;
-    max-width: 200px;
-}
-
-.share-btn {
-    min-width: 120px;
-    padding: 10px 20px;
-}
-
-.success-message {
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 10px;
-}
-
-/* Make sure QR code is centered */
-.qr-code-container img {
-    margin: 0 auto;
-    display: block;
-}
-
-/* Responsive adjustments */
-@media (max-width: 968px) {
-    .referral-section {
-        padding: 20px;
-    }
-    
-    .referral-container {
-        flex-direction: column;
-    }
-    
-    .referral-card {
-        width: 100%;
-    }
-}
-
 /* Section Headers */
 h2 {
     color: var(--text-primary);
@@ -566,10 +461,12 @@ h2 {
 
 /* Footer */
 footer {
-    background: var(--background-card);
-    padding: 1.5rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
     text-align: center;
-    color: var(--text-secondary);
+    z-index: 2;
 }
 
 /* Streak Card Specific */
@@ -848,15 +745,6 @@ footer {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.points-label {
-    color: #b3b3b3;
-}
-
-.points-value {
-    color: #febc11;
-    font-weight: bold;
-}
-
 .points-item.bonus .points-value {
     color: #00c851;
 }
@@ -907,28 +795,28 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    background: #1a1a1a;
+    background: rgba(26, 26, 26, 0.9); /* Semi-transparent nav */
     padding: 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     z-index: 1000;
     height: 60px;
-    width: 100vw; /* Full viewport width */
+    width: 100%;
 }
 
 .nav-container {
-    width: 100vw; /* Full viewport width */
-    display: flex;
-    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
     height: 100%;
-    padding: 0;
-    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .nav-left {
     display: flex;
     align-items: center;
     gap: 2rem;
-    padding-left: 2rem;
 }
 
 .nav-logo-img {
@@ -947,182 +835,492 @@ footer {
 
 .nav-center {
     display: flex;
-    justify-content: flex-start;
-    padding-left: 2rem;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.points-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.trophy-icon {
+    color: #FFD700;
+    font-size: 16px;
+}
+
+#pointsDisplay {
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.points-text {
+    font-size: 16px;
+    color: white;
 }
 
 .nav-right {
     display: flex;
     align-items: center;
     gap: 2rem;
-    margin-left: auto;
-    padding-right: 2rem;
-}
-
-.points-display {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: #2d2d2d;
-    padding: 0.75rem 1.5rem;
-    border-radius: 20px;
-    white-space: nowrap;
-    margin-right: 1rem;
-}
-
-.points-icon {
-    font-size: 1.2rem;
-}
-
-.points-value {
-    color: #ffd700;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-.points-label {
-    color: #999;
-    font-size: 0.9rem;
-}
-
-.profile-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-}
-
-.profile-link a:hover {
-    color: var(--primary-color);
-}
-
-.profile-img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #2d2d2d;
-    transition: border-color 0.2s;
-    cursor: pointer;
-}
-
-.profile-img:hover {
-    border-color: #007bff;
-}
-
-/* Adjust main content to account for fixed nav */
-main {
-    margin-top: 60px;
-    padding: 20px 40px;
-}
-
-/* Media query for larger screens */
-@media (min-width: 1440px) {
-    .nav-container {
-        padding: 0 4rem;
-    }
-    
-    .nav-links {
-        gap: 3rem;
-    }
-}
-
-/* Media query for smaller screens */
-@media (max-width: 1024px) {
-    .nav-container {
-        padding: 0 1rem;
-    }
-    
-    .nav-links {
-        gap: 1rem;
-    }
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 0.5rem;
+    gap: 2rem;
 }
 
-.nav-link {
+.nav-link,
+.profile-link {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-    white-space: nowrap;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.profile-link:hover {
+    color: #FFD700;
 }
 
 .nav-link.active {
-    background: #FFD700; /* Yellow */
-    color: #000000; /* Black text */
+    background: var(--primary-color);
+    color: black;
 }
 
 .nav-link:hover {
-    background: #FFE44D; /* Lighter yellow for hover */
-    color: #000000;
-}
-
-.rewards-container {
-    margin-top: 2rem;  /* Add space above the rewards section */
-}
-
-.tier-container {
-    margin-top: 2rem;  /* Add significant space above the reward tiers */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.tier-section {
-    margin-top: 3rem;  /* Add significant space above each tier section */
-}
-
-.tier-title {
-    margin-bottom: 1.5rem;  /* Add space between tier title and its rewards */
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.rewards-page {
-    margin-top: 3rem;
-}
-
-.tier {
-    margin-top: 2rem;
-}
-
-.tier-heading {
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-size: 1.5rem;
-}
-
-.rewards-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-.container {
-    margin-top: 5rem;  /* Increased from 4rem for more headspace */
-}
-
-.rewards-progress {
-    margin-top: 2rem;  /* Add consistent spacing between tier title and its rewards */
-}
-
-.profile-button:hover {
-    background-color: #FFD700;  /* Yellow color to match other buttons */
+    background: var(--primary-color);
     color: black;
 }
 
-nav .profile-btn:hover {
-    background-color: #FFD700;  /* Yellow color */
-    color: black;
+/* Main Content */
+main {
+    position: relative;
+    z-index: 1;
+    padding: 20px 40px;
+    margin-top: -100px; /* Negative margin to pull everything up */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+}
+
+/* Game Section Styles */
+.games-section {
+    padding: 20px;
+    max-width: 800px;
+    position: absolute;
+    bottom: 50px;
+    left: 60px;
+    transform: translateX(-100px);
+    z-index: 2;
+}
+
+.game-card.consolidated {
+    background: linear-gradient(135deg, #FFD700, #FFC107);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+
+.game-header {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-date {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.game-type {
+    background: #333;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.game-details {
+    padding: 20px;
+}
+
+.game-info h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.game-info p {
+    color: #555;
+    font-size: 1rem;
+}
+
+.points-info {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.base-points {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.bonus {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.game-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.view-players-btn, .check-in-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+.view-players-btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: #333;
+}
+
+.check-in-btn {
+    background: #333;
+    color: white;
+}
+
+.view-players-btn:hover, .check-in-btn:hover {
+    transform: scale(1.05);
+}
+
+.check-in-btn:hover {
+    background: #222;
+}
+
+.view-players-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 10px;
+    }
+    
+    .nav-center {
+        display: none;
+    }
+    
+    main {
+        margin: 60px 10px 0;
+        padding: 10px;
+    }
+    
+    .game-card.consolidated {
+        margin: 0 10px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .nav-container {
+        padding: 0 4rem;
+    }
+}
+
+/* Add new hero section styles */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.dark-overlay {
+    position: fixed; /* Change to fixed to ensure full coverage */
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100vh;
+    background: linear-gradient(to right,
+        rgba(0, 0, 0, 0.9) 60%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    z-index: 1;
+}
+
+.hero-title {
+    text-align: left;
+    padding: 0 60px;
+    margin-top: 80px; /* Keep this the same as before */
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #FFD700, #FFFFFF, #FFE55C);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    width: 50%;
+    position: relative;
+    z-index: 2;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.3),
+        4px 4px 8px rgba(0, 0, 0, 0.2),
+        6px 6px 12px rgba(0, 0, 0, 0.1);
+    animation: shimmer 3s ease-in-out infinite alternate;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -500px;
+    }
+    100% {
+        background-position: 500px;
+    }
+}
+
+/* New styles for points section */
+.home-page .points-overview {
+    position: absolute;
+    bottom: 140px; /* Decreased significantly from 280px to move it much further down */
+    left: 0;
+    z-index: 2;
+    width: 50%;
+    padding: 30px 60px;
+    color: white;
+    display: flex;
+    gap: 40px;
+}
+
+.points-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 400px; /* Add significant top margin to move down */
+}
+
+.points-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #FFD700;
+    margin-bottom: 8px;
+}
+
+.points-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Remove scan check-in container */
+.scan-container,
+.scan-title,
+.scan-description,
+[class*="scan-"],  /* This will catch any class that contains "scan-" */
+.qr-container,
+.qr-code,
+[class*="qr-"] {   /* This will catch any class that contains "qr-" */
+    display: none !important; /* Using !important to ensure it's hidden */
+}
+
+/* Remove all referral-related styles */
+.referral-section,
+.referral-box,
+[class*="referral-"],  /* This catches any class containing "referral-" */
+.invite-container,
+.invite-box,
+[class*="invite-"] {   /* This catches any class containing "invite-" */
+    display: none !important;
+}
+
+.key-container {
+    position: absolute;
+    bottom: 0%;
+    right: 60px;
+    transform: translateY(-20%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.generate-key, .verify-key {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    width: 300px;
+}
+
+.key-display {
+    font-size: 24px;
+    color: #000000;
+    margin: 15px 0;
+    font-family: monospace;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.copy-btn, .verify-btn {
+    background: #FFD700;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover, .verify-btn:hover {
+    background: #FFC107;
+}
+
+#keyInput {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.verification-message {
+    margin-top: 10px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.verification-message.success {
+    color: #4CAF50;
+    opacity: 1;
+}
+
+.verification-message.error {
+    color: #f44336;
+    opacity: 1;
+}
+
+.generate-key h3, .verify-key h3 {
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.points-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.points-number {
+    font-size: 1.4rem; /* Significantly reduced from previous size */
+    font-weight: bold;
+    color: #FFD700;
+    margin: 0;
+    line-height: 0;
+    position: absolute;
+    top: 10px;
+}
+
+.points-label {
+    font-size: 0.8rem;
+    color: white;
+    margin: 0;
+}
+
+/* Ensure nav elements are centered */
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+}
+
+/* Target the points number specifically */
+.nav-center span {
+    font-size: 16px; /* Significantly smaller font size */
+}
+
+/* Or if there's a specific class for the points number */
+.points-value,
+.points-number,
+#pointsDisplay {
+    font-size: 16px !important; /* Using !important to override any other styles */
+}
+
+/* First, remove all old points-related styles */
+.points-display,
+.points-container,
+.points-wrapper,
+[class*="points-"] {
+    display: none !important;
+}
+
+/* Create fresh, clean points display */
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.points-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.trophy-icon {
+    color: #FFD700;
+    font-size: 16px;
+}
+
+#pointsDisplay {
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.points-text {
+    font-size: 16px;
+    color: white;
+}
+

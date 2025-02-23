@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <div class="hero-section">
+        <div class="dark-overlay"></div>
+        <h1 class="hero-title">Go Big.<br>Go Home.<br>Go Gold.</h1>
+    </div>
+    
     <main>
         <!-- User Status Section -->
         <section class="user-status">
@@ -29,17 +34,26 @@
         <!-- Updated Games Section with Players -->
         <section class="games-section">
             <h2>Upcoming Games</h2>
-            <div class="game-card">
-                <div class="game-date">MAR 15</div>
-                <div class="game-details">
-                    <h3>Basketball vs Georgia Tech</h3>
-                    <p>7:00 PM - KSU Convocation Center</p>
-                    <div class="points-info">
-                        <span class="base-points">250 pts</span>
-                        <span class="bonus">+Streak Bonus Available!</span>
+            <div class="game-cards-container">
+                <div class="game-card consolidated">
+                    <div class="game-header">
+                        <div class="game-date">MAR 15</div>
+                        <div class="game-type">Basketball</div>
                     </div>
-                    <button class="view-players-btn">View Players</button>
-                    <button class="check-in-btn">Check In</button>
+                    <div class="game-details">
+                        <div class="game-info">
+                            <h3>KSU vs Georgia Tech</h3>
+                            <p>7:00 PM - KSU Convocation Center</p>
+                        </div>
+                        <div class="points-info">
+                            <span class="base-points">250 pts</span>
+                            <span class="bonus">+Streak Bonus Available!</span>
+                        </div>
+                        <div class="game-actions">
+                            <button class="view-players-btn">View Players</button>
+                            <button class="check-in-btn">Check In</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -115,15 +129,37 @@
                 </div>
             </div>
         </section>
+
+        <!-- Add after hero title but before games section -->
+        <div class="key-container">
+            <div class="generate-key">
+                <h3>Your Referral Key</h3>
+                <div class="key-display" id="generatedKey"></div>
+                <button onclick="copyKey()" class="copy-btn">Copy Key</button>
+            </div>
+            
+            <div class="verify-key">
+                <h3>Enter Referral Key</h3>
+                <input type="text" id="keyInput" placeholder="Enter key (ABC-DEF)">
+                <button onclick="verifyKey()" class="verify-btn">Verify</button>
+                <div id="verificationMessage" class="verification-message"></div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <p>© 2025 KSU Sports Rewards Program</p>
     </footer>
     <script src="/main.js" type="module"></script>
-    <script src="instagramAuth.js" type="module"></script>
-    <script src="nav.js" type="module"></script>
-    <script src="app.js" type="module"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <script src="/instagramAuth.js" type="module"></script>
+    <script src="/nav.js" type="module"></script>
+    <script src="/app.js" type="module"></script>
+    <div class="nav-center">
+        <div class="points-counter">
+            <i class="fas fa-trophy trophy-icon"></i>
+            <span id="pointsDisplay">0</span>
+            <span class="points-text">points</span>
+        </div>
+    </div>
 </body>
 </html>
