@@ -165,4 +165,78 @@ class DatabaseManager {
 // Initialize auth manager only if we're on the auth page
 if (document.querySelector('.auth-container')) {
     new AuthManager();
-} 
+}
+
+// User data storage (in real app, this would be a database)
+let users = JSON.parse(localStorage.getItem('users')) || {};
+let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+
+const authForm = document.getElementById('authForm');
+const errorMessage = document.getElementById('errorMessage');
+const successMessage = document.getElementById('successMessage');
+
+function showError(message) {
+    errorMessage.style.display = 'block';
+    errorMessage.textContent = message;
+    successMessage.style.display = 'none';
+}
+
+function showSuccess(message) {
+    successMessage.style.display = 'block';
+    successMessage.textContent = message;
+    errorMessage.style.display = 'none';
+}
+
+function validateReferralCode(code) {
+    // Check if the referral code exists in any user's data
+    return Object.values(users).some(user => user.referralCode === code);
+}
+
+function generateReferralCode(username) {
+    return `KSU-${username}-${Date.now().toString(36)}`;
+}
+
+authForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value.trim();
+    const referralCode = document.getElementById('referralCode').value.trim();
+
+    // Check if it's a new user
+    if (!users[username]) {
+        // Create new user
+        users[username] = {
+            username: username,
+            points: 0,
+            referralCode: generateReferralCode(username),
+            beenReferred: false,
+            referralsSent: 0
+        };
+
+        // Handle referral code if provided
+        if (referralCode) {
+            if (validateReferralCode(referralCode)) {
+                // Find referrer
+                const referrer = Object.values(users).find(user => user.referralCode === referralCode);
+                if (referrer) {
+                    users[username].points += 50;
+                    users[username].beenReferred = true;
+                    users[referrer.username].points += 100;
+                    users[referrer.username].referralsSent += 1;
+                    showSuccess('Referral bonus applied! You got 50 points!');
+                }
+            } else {
+                showError('Invalid referral code');
+                return;
+            }
+        }
+    }
+
+    // Set current user and save data
+    currentUser = users[username];
+    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    // Redirect to profile page
+    window.location.href = 'profile.html';
+}); 

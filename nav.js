@@ -44,4 +44,9 @@ export function updateProfilePic(imageUrl) {
     if (profileImg) {
         profileImg.src = imageUrl;
     }
-} 
+}
+
+// Update the profile button click handler
+document.getElementById('profile-btn').addEventListener('click', function() {
+    window.location.href = 'profile.html';
+}); 
