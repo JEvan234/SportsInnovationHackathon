@@ -195,7 +195,23 @@ function copyKey() {
     }, 2000);
 }
 
-// Verify entered key
+// Initialize points
+let currentPoints = 0;
+
+// Function to update points
+function updatePoints(newPoints) {
+    currentPoints += newPoints;
+    document.getElementById('pointsValue').textContent = currentPoints;
+    
+    // Optional: Add animation effect
+    const pointsElement = document.getElementById('pointsValue');
+    pointsElement.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+        pointsElement.style.transform = 'scale(1)';
+    }, 200);
+}
+
+// Modify your existing verifyKey function
 function verifyKey() {
     const input = document.getElementById('keyInput');
     const message = document.getElementById('verificationMessage');
@@ -203,6 +219,7 @@ function verifyKey() {
     if (input.value.toUpperCase() === currentKey) {
         message.textContent = 'Success! Key verified!';
         message.className = 'verification-message success';
+        updatePoints(100); // Add 100 points for successful verification
         input.value = '';
     } else {
         message.textContent = 'Invalid key. Please try again.';
@@ -210,5 +227,24 @@ function verifyKey() {
     }
 }
 
-// Generate key on page load
-window.onload = generateKey;
+// Optional: Save points to localStorage to persist between page refreshes
+function savePoints() {
+    localStorage.setItem('userPoints', currentPoints);
+}
+
+function loadPoints() {
+    const savedPoints = localStorage.getItem('userPoints');
+    if (savedPoints) {
+        currentPoints = parseInt(savedPoints);
+        document.getElementById('pointsValue').textContent = currentPoints;
+    }
+}
+
+// Load points when page loads
+window.onload = function() {
+    generateKey();
+    loadPoints();
+};
+
+// Save points when page unloads
+window.onbeforeunload = savePoints;

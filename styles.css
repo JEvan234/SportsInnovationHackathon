@@ -835,8 +835,34 @@ footer {
 
 .nav-center {
     display: flex;
-    justify-content: center;
-    flex-grow: 1;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.points-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.trophy-icon {
+    color: #FFD700;
+    font-size: 16px;
+}
+
+#pointsDisplay {
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.points-text {
+    font-size: 16px;
+    color: white;
 }
 
 .nav-right {
@@ -851,12 +877,17 @@ footer {
     gap: 2rem;
 }
 
-.nav-link {
+.nav-link,
+.profile-link {
     color: white;
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.profile-link:hover {
+    color: #FFD700;
 }
 
 .nav-link.active {
@@ -1205,5 +1236,91 @@ main {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
     font-size: 1.2rem;
+}
+
+.points-display {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.points-number {
+    font-size: 1.4rem; /* Significantly reduced from previous size */
+    font-weight: bold;
+    color: #FFD700;
+    margin: 0;
+    line-height: 0;
+    position: absolute;
+    top: 10px;
+}
+
+.points-label {
+    font-size: 0.8rem;
+    color: white;
+    margin: 0;
+}
+
+/* Ensure nav elements are centered */
+.nav-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    height: 100%;
+}
+
+/* Target the points number specifically */
+.nav-center span {
+    font-size: 16px; /* Significantly smaller font size */
+}
+
+/* Or if there's a specific class for the points number */
+.points-value,
+.points-number,
+#pointsDisplay {
+    font-size: 16px !important; /* Using !important to override any other styles */
+}
+
+/* First, remove all old points-related styles */
+.points-display,
+.points-container,
+.points-wrapper,
+[class*="points-"] {
+    display: none !important;
+}
+
+/* Create fresh, clean points display */
+.nav-center {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 15px;
+    height: 100%;
+}
+
+.points-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.trophy-icon {
+    color: #FFD700;
+    font-size: 16px;
+}
+
+#pointsDisplay {
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.points-text {
+    font-size: 16px;
+    color: white;
 }
 
