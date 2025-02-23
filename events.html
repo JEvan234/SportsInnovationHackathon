@@ -6,87 +6,84 @@
     <title>KSU Fan Rewards - Events</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
+        /* Your existing styles */
+        
+        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
         }
 
         .modal-content {
-            background: white;
+            background-color: #2d2d2d;
+            margin: 15% auto;
             padding: 30px;
             border-radius: 12px;
+            width: 80%;
+            max-width: 400px;
             text-align: center;
             position: relative;
-            max-width: 320px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .close-button {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            border: none;
-            background: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #666;
-            transition: color 0.2s ease;
-        }
-
-        .close-button:hover {
-            color: #333;
-        }
-
-        #modalTitle {
-            color: #333;
+        .modal-content h2 {
+            color: #ffffff;
             font-size: 1.5rem;
             margin-bottom: 20px;
-            font-weight: 600;
+        }
+
+        .close {
+            color: #888;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
         }
 
         #qrcode {
             margin: 20px auto;
-            padding: 15px;
-            background: #f8f8f8;
+            padding: 20px;
+            background: #ffffff;
             border-radius: 8px;
             width: fit-content;
         }
 
-        #ticketId {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 15px;
+        .ticket-info {
+            color: #e0e0e0;
+            margin-top: 20px;
+            padding: 15px;
+            background: #3d3d3d;
+            border-radius: 8px;
+            text-align: left;
         }
 
-        .validation-text {
-            color: #4CAF50;
-            font-weight: 500;
+        .ticket-id {
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 1.1em;
             margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="ticketModal" class="modal">
-        <div class="modal-content">
-            <button class="close-button" onclick="closeModal()">&times;</button>
-            <h2 id="modalTitle"></h2>
-            <div id="qrcode"></div>
-            <p id="ticketId"></p>
-        </div>
-    </div>
-
     <nav class="navbar">
         <div class="nav-left">
         </div>
@@ -180,54 +177,92 @@
         </div>
     </div>
 
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Your Event Ticket</h2>
+            <div id="qrcode"></div>
+            <div class="ticket-info">
+                <p>Scan this QR code for entry</p>
+                <p class="ticket-id">Ticket ID: <span id="ticketIdDisplay"></span></p>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function handleTicket(eventType) {
-            // Clear any existing QR code
-            document.getElementById('qrcode').innerHTML = '';
-            
-            // Generate ticket ID
-            const ticketId = `KSU-${eventType}-${Date.now()}`;
-            
-            // Update modal content
-            document.getElementById('modalTitle').textContent = `Your ${eventType} Ticket`;
-            document.getElementById('ticketId').textContent = `Ticket ID: ${ticketId}`;
-            
-            // Create validation data
-            const ticketData = {
-                event: eventType,
-                ticketId: ticketId,
-                timestamp: new Date().toISOString(),
-                status: "Valid Ticket"
-            };
-
-            // Create the validation URL with ticket data as parameters
-            const validationUrl = `http://172.20.10.2:5500/validate.html`;
-
-            // Show modal
-            document.getElementById('ticketModal').style.display = 'flex';
-
-            // Generate QR code with the URL instead of the ticket data
-            new QRCode(document.getElementById("qrcode"), {
-                text: validationUrl,
-                width: 200,
-                height: 200,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+        function generateTicketId() {
+            // Generate a random 6-digit number
+            return Math.floor(100000 + Math.random() * 900000).toString();
         }
 
-        function closeModal() {
-            document.getElementById('ticketModal').style.display = 'none';
-        }
+        async function handleTicket(event) {
+            try {
+                const ticketId = generateTicketId();
+                const ticketData = {
+                    event: event.name,
+                    ticketId: ticketId,
+                    status: "Valid",
+                    timestamp: new Date().toISOString()
+                };
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('ticketModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
+                // Encode the data for URL
+                const encodedData = encodeURIComponent(JSON.stringify(ticketData));
+                
+                // Create the validator URL with the ticket data
+                const validatorUrl = `https://ticket-validator-lake.vercel.app/?data=${encodedData}`;
+
+                // Get the QR code container element
+                const qrCodeContainer = document.getElementById('qrcode');
+                if (!qrCodeContainer) {
+                    console.error('QR code container not found');
+                    return;
+                }
+                
+                // Clear previous QR code if any
+                qrCodeContainer.innerHTML = '';
+
+                // Generate new QR code with the Vercel URL
+                new QRCode(qrCodeContainer, {
+                    text: validatorUrl,
+                    width: 128,
+                    height: 128,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                });
+
+                // Display the ticket ID
+                const ticketIdElement = document.getElementById('ticketIdDisplay');
+                if (ticketIdElement) {
+                    ticketIdElement.textContent = ticketId;
+                }
+
+                // Show the modal with QR code
+                const modal = document.getElementById('ticketModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error generating ticket:', error);
             }
         }
+
+        // Add modal close functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('ticketModal');
+            const span = document.getElementsByClassName('close')[0];
+            
+            if (span) {
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        });
     </script>
     
     <script src="nav.js" type="module"></script>
