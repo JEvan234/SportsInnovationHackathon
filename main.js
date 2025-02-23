@@ -169,3 +169,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Store generated key
+let currentKey = '';
+
+// Generate random key on page load
+function generateKey() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let key = '';
+    for (let i = 0; i < 6; i++) {
+        if (i === 3) key += '-';
+        key += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    currentKey = key;
+    document.getElementById('generatedKey').textContent = key;
+}
+
+// Copy key to clipboard
+function copyKey() {
+    navigator.clipboard.writeText(currentKey);
+    const copyBtn = document.querySelector('.copy-btn');
+    copyBtn.textContent = 'Key Copied!';
+    setTimeout(() => {
+        copyBtn.textContent = 'Copy Key';
+    }, 2000);
+}
+
+// Verify entered key
+function verifyKey() {
+    const input = document.getElementById('keyInput');
+    const message = document.getElementById('verificationMessage');
+    
+    if (input.value.toUpperCase() === currentKey) {
+        message.textContent = 'Success! Key verified!';
+        message.className = 'verification-message success';
+        input.value = '';
+    } else {
+        message.textContent = 'Invalid key. Please try again.';
+        message.className = 'verification-message error';
+    }
+}
+
+// Generate key on page load
+window.onload = generateKey;
