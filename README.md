@@ -11,4 +11,4 @@ We chose to develop a solution regarding fan engagement, and made a website that
 As part of the research of our solution, we sent multiple team members to a sporting events that were occuring on the same day, and asked a variety of questions to fans and staff alike to refine what our website should offer.
 
 ## Screenshots:
-![index](github.com/Jevan234/SportsInnovationHackathon/assets/md_Images/index.png)
+![github.com/Jevan234/SportsInnovationHackathon/assets/md_Images/Index.png](github.com/Jevan234/SportsInnovationHackathon/assets/md_Images/Index.png)
