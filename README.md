@@ -1,8 +1,8 @@
 # 2025 Sports Innovation Hackathon
-The goal of this hackathon was to research and develop a solution to a problem within ~36 hours in one of three general catagories:
--Fan Engagement
--Gameday Operations
--Athlete Experience
+The goal of this hackathon was to research and develop a solution to a problem within ~36 hours in one of three general catagories: <br>
+-Fan Engagement <br>
+-Gameday Operations <br>
+-Athlete Experience <br>
 <br>
 
 ## Our Solution:
