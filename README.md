@@ -12,3 +12,5 @@ As part of the research of our solution, we sent multiple team members to a spor
 
 ## Screenshots:
 ![assets/md_Images/Index.png](assets/md_Images/index.png)
+![assets/md_Images/.png](assets/md_Images/Leaderboard.png)
+![assets/md_Images/Index.png](assets/md_Images/Events.png)
