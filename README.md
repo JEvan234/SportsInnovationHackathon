@@ -1,8 +1,8 @@
 # 2025 Sports Innovation Hackathon
 The goal of this hackathon was to research and develop a solution to a problem within ~36 hours in one of three general catagories: <br>
--Fan Engagement <br>
--Gameday Operations <br>
--Athlete Experience <br>
+- Fan Engagement <br>
+- Gameday Operations <br>
+- Athlete Experience <br>
 
 ## Our Solution:
 We chose to develop a solution regarding fan engagement, and made a website that was ideally going to unify information across the many platforms KSU offers, such as ticket registration. This site was also intended to offer a rewards system, and encourage fans to attend multiple games, especially with friends. <br>
