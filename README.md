@@ -10,6 +10,9 @@ We chose to develop a solution regarding fan engagement, and made a website that
 ## Our Research: 
 As part of the research of our solution, we sent multiple team members to a sporting events that were occuring on the same day, and asked a variety of questions to fans and staff alike to refine what our website should offer.
 
+## The Issues:
+After the event, we found that our solution was broad in scope of the criteria. While we focused on improving fan experience overall, we found that we should have focused more on one specific issue facing KSU fans. Due to our projects broad approach, we also found that many features ended up being unpolished or not functional.
+
 ## Screenshots:
 ![assets/md_Images/Index.png](assets/md_Images/index.png)
 ![assets/md_Images/Leaderboard.png](assets/md_Images/Leaderboard.png)
